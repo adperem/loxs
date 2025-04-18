@@ -261,7 +261,7 @@ try:
             print(border_color + "│" + option_color + option.ljust(72) + border_color + "│")
         
         print(border_color + "└" + "─" * 72 + "┘")
-        authors = "Created by: Coffinxp, 1hehaq, HexSh1dow, Naho, AnonKryptiQuz, Hghost010"
+        authors = "Created by: Coffinxp, 1hehaq, HexSh1dow, Naho, AnonKryptiQuz, Hghost010, adperem"
         instructions = "Select an option by entering the corresponding number:"
         
         print(Fore.WHITE + Style.BRIGHT + "─" * 72)
@@ -280,7 +280,7 @@ try:
         |______/|___  |_____||______/|___  |_____|
                 |_____|              |_____|      
         
-  Credit: Coffinxp - 1hehaq - HexSh1dow - AnonKryptiQuz - Naho - Hghost010
+  Credit: Coffinxp - 1hehaq - HexSh1dow - AnonKryptiQuz - Naho - Hghost010 - adperem
             """,
             style="bold green",
             border_style="blue",
