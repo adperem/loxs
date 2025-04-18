@@ -1,210 +1,164 @@
 <div align="center">
-   <a href="https://github.com/coffinxp/loxs"><img src="https://github.com/user-attachments/assets/9fadee1e-a33c-46e3-9eca-c04aa47a443e" hight="225" width="450" align="center"/></a>
+   <a href="https://github.com/coffinxp/loxs">
+      <img src="https://github.com/user-attachments/assets/9fadee1e-a33c-46e3-9eca-c04aa47a443e" height="225" width="450"/>
+   </a>
 </div>
 
-<br>
-<br>
 <br>
 
 <div align="center">
-   
-|Loxs|Multi Vulnerability Scanner|for web application|
-|----------------|--------------|-------------|
-| `L`| `=`| `Local File Inclusion (LFI)`|
-| `O`| `=`| `Open Redirection (OR)`|
-| `X`| `=`| `Cross Site Scripting (XSS)`|
-| `S`| `=`| `Structured Query Language Injection (SQLi)`|
-|    |    | `Carriage Return Line Feed Injection (CRLF)`|
 
-> **Loxs** is an easy-to-use tool that finds web issues like `LFI` - `OR` - `SQLi` - `XSS` - `CRLF`. <br><br> *`Made by`* - [`AnonKryptiQuz`](https://github.com/AnonKryptiQuz) x [`Coffinxp`](https://github.com/coffinxp) x [`HexShad0w`](https://github.com/HexShad0w) x [`Naho`](https://github.com/Naho666) x [`1hehaq`](https://github.com/1hehaq) x [`Hghost010`](https://github.com/Hghost0x00) x [`adperem`](https://github.com/adperem)!
+| **🔍 Loxs** | **🛡️ Multi Vulnerability Scanner** | **🌐 for Web Applications**                |
+| ----------- | ----------------------------------- | ------------------------------------------ |
+| `L`         | =                                   | Local File Inclusion (LFI)                 |
+| `O`         | =                                   | Open Redirection (OR)                      |
+| `X`         | =                                   | Cross-Site Scripting (XSS)                 |
+| `S`         | =                                   | SQL Injection (SQLi)                       |
+|             |                                     | Carriage Return Line Feed Injection (CRLF) |
 
-</div>
+> **Loxs** is a powerful and user-friendly tool for identifying common web vulnerabilities such as `LFI`, `OR`, `SQLi`, `XSS`, and `CRLF`.\
+> 👨‍💻 **Created by:** [`AnonKryptiQuz`](https://github.com/AnonKryptiQuz) × [`Coffinxp`](https://github.com/coffinxp) × [`HexShad0w`](https://github.com/HexShad0w) × [`Naho`](https://github.com/Naho666) × [`1hehaq`](https://github.com/1hehaq) × [`Hghost010`](https://github.com/Hghost0x00) × [`adperem`](https://github.com/adperem)
 
-<hr>
+---
 
-<br>
-<br>
-<br>
+## 🚀 Features
 
+| Feature                     | Description                                                         |
+| --------------------------- | ------------------------------------------------------------------- |
+| 🗂️ `LFI Scanner`           | Detects Local File Inclusion vulnerabilities.                       |
+| 🔀 `OR Scanner`             | Identifies Open Redirect vulnerabilities.                           |
+| 💉 `SQLi Scanner`           | Detects SQL Injection vulnerabilities.                              |
+| 🧬 `XSS Scanner`            | Identifies Cross-Site Scripting vulnerabilities.                    |
+| 🧾 `CRLF Scanner`           | Detects Carriage Return Line Feed Injection vulnerabilities.        |
+| ⚡ `Multi-threaded Scanning` | Boosts performance with concurrent requests.                        |
+| 🧰 `Customizable Payloads`  | Easily adapt payloads for different environments or specific needs. |
+| 🧠 `Success Criteria`       | Configure patterns that determine successful exploitation.          |
+| 💻 `User-friendly CLI`      | Clean, intuitive command-line interface.                            |
+| 💾 `Save Vulnerable URLs`   | Option to store results for future reference.                       |
+| 📊 `HTML Report Generation` | Automatically creates a detailed report in HTML format.             |
 
-| Features                          | About                                                                       |
-|-----------------------------------|-----------------------------------------------------------------------------|
-| `LFI Scanner`                     | Detect Local File Inclusion vulnerabilities.                                |
-| `OR Scanner`                      | Identify Open Redirect vulnerabilities.                                     |
-| `SQL Scanner`                     | Detect SQL Injection vulnerabilities.                                       |
-| `XSS Scanner`                     | Identify Cross-Site Scripting vulnerabilities.                              |
-| `CRLF Scanner`                    | Detect Carriage Return Line Feed Injection vulnerabilities.                 |
-| `Multi-threaded Scanning`         | Improved performance through multi-threading.                               |
-| `Customizable Payloads`           | Adjust payloads to suit specific targets.                                   |
-| `Success Criteria`                | Modify success detection criteria for specific use cases.                   |
-| `User-friendly CLI`               | Simple and intuitive command-line interface.                                |
-| `Save Vulnerable URLs`            | Option to save vulnerable URLs to a file for future reference.              |
-| `HTML Report Generation`          | Generates a detailed HTML report of found vulnerabilities.                  |
-<!-- | `Share HTML Report via Telegram`  | Share HTML vulnerability reports directly through Telegram.                 | -->
+---
 
-<br>
-<hr>
-<br>
-<br>
+## 📦 Supported Environment
 
-| Language                          | Packages                                                                    |
-|-----------------------------------|-----------------------------------------------------------------------------|
-| ***Python***| `Python 3.x` `webdriver_manager` `selenium` `aiohttp` `beautifulsoup4` `colorama` `rich` `requests` `gitpython` `prompt_toolkit` `pyyaml` `Flask`|
+| Language    | Packages                                                                                                                                       |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🐍 Python 3 | `webdriver_manager`, `selenium`, `aiohttp`, `beautifulsoup4`, `colorama`, `rich`, `requests`, `gitpython`, `prompt_toolkit`, `pyyaml`, `flask` |
 
-<br>
-<hr>
-<br>
+---
 
-## Installation
+## ⚙️ Installation
 
-### Clone the repository
+### 1. 📥 Clone the Repository
 
 ```bash
 git clone https://github.com/coffinxp/loxs.git
-```
-```bash
 cd loxs
 ```
 
-### Install the requirements
+### 2. 📦 Install Dependencies
 
 ```bash
 pip3 install -r requirements.txt
 ```
-### Run the Script
+
+### 3. ▶️ Run the Tool
 
 ```bash
 python3 loxs.py
 ```
-<!-- to update the tool to the latest version
-```bash
-just edit the config.yml file with your tool directory
-after pressing 5 and exiting from the tool run the tool again it will run with an updated version
-``` -->
 
-----
+---
 
-| Input Information         |                                                                                         |
-|---------------------------|-----------------------------------------------------------------------------------------|
-| Input URL/File            | Provide a single URL or an input file containing multiple URLs for scanning.            |
-| Payload File              | Select or provide a custom payload file for the specific type of vulnerability scanning.|
-| Success Criteria          | Define patterns or strings indicating a successful exploitation attempt.                |
-| Concurrent Threads        | Set the number of threads for multi-threaded scanning.                                  |
-| View and Save Results     | Display results in real-time during the scan, and save vulnerable URLs for future use.  |
+## 🌐 Chrome & ChromeDriver Setup
 
-----
-
-| Customization              |                                                                                          |
-|----------------------------|------------------------------------------------------------------------------------------|
-| Custom Payloads            | Modify or create payload files for different vulnerability types to target specific apps.|
-| Success Criteria           | Adjust the tool's success patterns to more accurately detect successful exploitations.   |
-| Concurrent Threads         | Control the number of threads used during the scan for performance optimization.         |
-
-
-----
-
-### Chrome Installation
+### 🧩 Install Google Chrome
 
 ```bash
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-```
-
-```bash
 sudo dpkg -i google-chrome-stable_current_amd64.deb
-```
-
-- If you encounter any errors during installation, use the following command:
-
-```bash
 sudo apt -f install
 ```
 
-```bash
-sudo dpkg -i google-chrome-stable_current_amd64.deb
-```
-
-----
-
-### Chrome Driver Installation
+### 🧰 Install ChromeDriver
 
 ```bash
 wget https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.119/linux64/chromedriver-linux64.zip
-```
-```bash
 unzip chromedriver-linux64.zip
-```
-```bash
-cd chromedriver-linux64 
-```
-```bash
+cd chromedriver-linux64
 sudo mv chromedriver /usr/bin
 ```
 
 ---
 
-## Tor Installation on Kali Linux
+## 🕵️ Tor Installation on Kali Linux
 
-Tor is useful for anonymizing traffic during testing. Below are the steps to install and configure it on Kali Linux.
+Tor can help anonymize your scanning activities.
 
-### 📦 Step 1: Update the system
+### 1️⃣ Update Your System
 
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-### 🔧 Step 2: Install Tor
+### 2️⃣ Install Tor
 
 ```bash
 sudo apt install tor -y
 ```
 
-### 🚀 Step 3: Start and enable the Tor service
+### 3️⃣ Enable and Start Tor Service
 
 ```bash
-sudo systemctl start tor
 sudo systemctl enable tor
+sudo systemctl start tor
 ```
 
-To check the status:
-
-```bash
-systemctl status tor
-```
-
-### 🔍 Step 4: Verify Tor is working
+### 4️⃣ Verify Tor is Working
 
 ```bash
 curl --socks5 127.0.0.1:9050 https://check.torproject.org/
 ```
 
-You should see a message like:  
-**"Congratulations. This browser is configured to use Tor."**
+You should see a message like: **"🎉 Congratulations. This browser is configured to use Tor."**
 
-### ⚙️ Step 5: Optional Configuration
-
-Edit the config file if needed:
+### 5️⃣ (Optional) Edit Configuration
 
 ```bash
 sudo nano /etc/tor/torrc
 ```
 
-Restart Tor after any changes:
+Then restart:
 
 ```bash
 sudo systemctl restart tor
 ```
 
-### 🛑 To stop Tor:
+---
 
-```bash
-sudo systemctl stop tor
-```
+## 🧪 Usage Options
+
+| Option                         | Description                                                 |
+| ------------------------------ | ----------------------------------------------------------- |
+| 🔗 Input URL/File              | Provide a single URL or a file containing multiple targets. |
+| 🧨 Payload File                | Use or create custom payloads for specific scanning needs.  |
+| ✅ Success Criteria             | Define success indicators for different exploit types.      |
+| 🚀 Concurrent Threads          | Configure the number of parallel requests.                  |
+| 📋 Real-time and Saved Results | Display ongoing findings and save final results to file.    |
 
 ---
-<hr>
 
-> [!WARNING]  
-> Loxs is intended for educational and ethical hacking purposes only. It should only be used to test systems you own or have explicit permission to test. Unauthorized use of third-party websites or systems without consent is illegal and unethical.
+## 🛠️ Customization
+
+| Customization Feature     | Description                                                    |
+| ------------------------- | -------------------------------------------------------------- |
+| ✏️ Payload Configuration  | Customize or add new payloads for various scan types.          |
+| 🎯 Success Pattern Tuning | Modify success conditions based on the application under test. |
+| ⚙️ Thread Optimization    | Improve performance by setting appropriate concurrency levels. |
+
+---
+
+> ⚠️ **Disclaimer:** This tool is intended solely for educational and authorized security testing. Unauthorized usage on systems you do not own or have explicit permission to test is strictly prohibited.
 
 <br>
 
