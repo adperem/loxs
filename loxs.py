@@ -81,6 +81,88 @@ try:
     from queue import Queue
     from threading import Lock
 
+
+    PROXY_CONFIG = {
+        'use_proxy': True,  # Set to False to disable Tor proxy
+        'socks5_proxy': 'socks5://127.0.0.1:9050'  # Tor proxy address
+    }
+
+    def get_proxy_session():
+        """Create a requests session with proxy settings if enabled."""
+        session = requests.Session()
+        if PROXY_CONFIG['use_proxy']:
+            proxies = {
+                'http': PROXY_CONFIG['socks5_proxy'],
+                'https': PROXY_CONFIG['socks5_proxy']
+            }
+            session.proxies.update(proxies)
+        retry = Retry(
+            total=3,
+            read=3,
+            connect=3,
+            backoff_factor=0.3,
+            status_forcelist=(500, 502, 504)
+        )
+        adapter = HTTPAdapter(max_retries=retry)
+        session.mount('http://', adapter)
+        session.mount('https://', adapter)
+        return session
+
+    def verify_tor_connection():
+        """Verifica que el tráfico se enrute a través de Tor. Termina si no es así."""
+        if not PROXY_CONFIG['use_proxy']:
+            print(Fore.RED + "[!] Proxy está desactivado en PROXY_CONFIG. Activando para verificar Tor...")
+            return True  # Permitir ejecución si el proxy está desactivado intencionalmente
+
+        # Prueba para requests
+        try:
+            session = get_proxy_session()
+            response = session.get('https://check.torproject.org', timeout=10)
+            if "Congratulations. This browser is configured to use Tor." not in response.text:
+                print(Fore.RED + "[!] Error: El tráfico de requests NO se está enrutando a través de Tor.")
+                return False
+            print(Fore.GREEN + "[+] Verificado: El tráfico de requests se enruta a través de Tor.")
+        except requests.exceptions.RequestException as e:
+            print(Fore.RED + f"[!] Error al verificar Tor para requests: {e}")
+            return False
+
+        # Prueba para Selenium
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--disable-browser-side-navigation")
+        chrome_options.add_argument("--disable-infobars")
+        chrome_options.add_argument("--disable-notifications")
+        chrome_options.add_argument("--window-size=1920,1080")
+        chrome_options.add_argument(f"--proxy-server={PROXY_CONFIG['socks5_proxy']}")
+        chrome_options.add_argument('--host-resolver-rules=MAP * 0.0.0.0, EXCLUDE 127.0.0.1')
+
+        logging.getLogger('WDM').setLevel(logging.ERROR)
+        driver_service = Service(ChromeDriverManager().install())
+
+        try:
+            driver = webdriver.Chrome(service=driver_service, options=chrome_options)
+            driver.get('https://check.torproject.org')
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.TAG_NAME, 'h1'))
+            )
+            tor_check = driver.find_element(By.TAG_NAME, 'h1').text
+            driver.quit()
+            if "Congratulations" not in tor_check:
+                print(Fore.RED + "[!] Error: El tráfico de Selenium NO se está enrutando a través de Tor.")
+                return False
+            print(Fore.GREEN + "[+] Verificado: El tráfico de Selenium se enruta a través de Tor.")
+            return True
+        except Exception as e:
+            print(Fore.RED + f"[!] Error al verificar Tor para Selenium: {e}")
+            if 'driver' in locals():
+                driver.quit()
+            return False
+
+
     USER_AGENTS = [
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.198 Safari/537.36",
@@ -671,6 +753,10 @@ try:
             
             
     def run_sql_scanner(scan_state=None):
+            # Verificar enrutamiento a través de Tor
+            if not verify_tor_connection():
+                print(Fore.RED + "[!] Ejecución terminada: No se pudo verificar el enrutamiento a través de Tor.")
+                sys.exit(1)
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
             init(autoreset=True)
             
@@ -962,6 +1048,11 @@ try:
 
 
     def run_xss_scanner(scan_state=None):
+        # Verificar enrutamiento a través de Tor
+        if not verify_tor_connection():
+            print(Fore.RED + "[!] Ejecución terminada: No se pudo verificar el enrutamiento a través de Tor.")
+            sys.exit(1)
+
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         logging.getLogger('WDM').setLevel(logging.ERROR)
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -994,20 +1085,35 @@ try:
 
         def create_driver():
             chrome_options = Options()
-            chrome_options.add_argument("--headless")
-            chrome_options.add_argument("--no-sandbox")
-            chrome_options.add_argument("--disable-dev-shm-usage")
-            chrome_options.add_argument("--disable-gpu")
+            chrome_options.add_argument("--headless")  # Essential for WSL
+            chrome_options.add_argument("--no-sandbox")  # Bypass permission issues
+            chrome_options.add_argument("--disable-dev-shm-usage")  # Fix memory issues
+            chrome_options.add_argument("--disable-gpu")  # Disable GPU acceleration
             chrome_options.add_argument("--disable-extensions")
             chrome_options.add_argument("--disable-browser-side-navigation")
             chrome_options.add_argument("--disable-infobars")
             chrome_options.add_argument("--disable-notifications")
+            chrome_options.add_argument("--window-size=1920,1080")  # Consistent window size
             chrome_options.page_load_strategy = 'eager'
             logging.disable(logging.CRITICAL)
             
+            # Add Tor proxy if enabled
+            if PROXY_CONFIG['use_proxy']:
+                chrome_options.add_argument(f"--proxy-server={PROXY_CONFIG['socks5_proxy']}")
+                # Ensure DNS resolution goes through the proxy
+                chrome_options.add_argument('--host-resolver-rules=MAP * 0.0.0.0, EXCLUDE 127.0.0.1')
 
+            # Suppress webdriver-manager logs
+            logging.getLogger('WDM').setLevel(logging.ERROR)
             driver_service = Service(ChromeDriverManager().install())
-            return webdriver.Chrome(service=driver_service, options=chrome_options)
+
+
+            try:
+                driver = webdriver.Chrome(service=driver_service, options=chrome_options)
+                return driver
+            except Exception as e:
+                logging.error(f"Failed to create driver: {e}")
+                return None
 
         def get_driver():
             try:
@@ -1235,8 +1341,10 @@ try:
 
 
     def run_or_scanner(scan_state=None):
-            
-
+        # Verificar enrutamiento a través de Tor
+        if not verify_tor_connection():
+            print(Fore.RED + "[!] Ejecución terminada: No se pudo verificar el enrutamiento a través de Tor.")
+            sys.exit(1)           
         init()
 
         scan_active = True
@@ -1665,6 +1773,11 @@ try:
             sys.exit()
 
     def run_lfi_scanner(scan_state=None):
+        # Verificar enrutamiento a través de Tor
+        if not verify_tor_connection():
+            print(Fore.RED + "[!] Ejecución terminada: No se pudo verificar el enrutamiento a través de Tor.")
+            sys.exit(1)
+
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
         init(autoreset=True)
@@ -1899,6 +2012,11 @@ try:
         exit()
         
     def run_crlf_scanner(scan_state=None):
+        # Verificar enrutamiento a través de Tor
+        if not verify_tor_connection():
+            print(Fore.RED + "[!] Ejecución terminada: No se pudo verificar el enrutamiento a través de Tor.")
+            sys.exit(1)
+            
         init(autoreset=True)
 
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
