@@ -16,7 +16,7 @@
 | `S`| `=`| `Structured Query Language Injection (SQLi)`|
 |    |    | `Carriage Return Line Feed Injection (CRLF)`|
 
-> **Loxs** is an easy-to-use tool that finds web issues like `LFI` - `OR` - `SQLi` - `XSS` - `CRLF`. <br><br> *`Made by`* - [`AnonKryptiQuz`](https://github.com/AnonKryptiQuz) x [`Coffinxp`](https://github.com/coffinxp) x [`HexShad0w`](https://github.com/HexShad0w) x [`Naho`](https://github.com/Naho666) x [`1hehaq`](https://github.com/1hehaq) x [`Hghost010`](https://github.com/Hghost0x00)!
+> **Loxs** is an easy-to-use tool that finds web issues like `LFI` - `OR` - `SQLi` - `XSS` - `CRLF`. <br><br> *`Made by`* - [`AnonKryptiQuz`](https://github.com/AnonKryptiQuz) x [`Coffinxp`](https://github.com/coffinxp) x [`HexShad0w`](https://github.com/HexShad0w) x [`Naho`](https://github.com/Naho666) x [`1hehaq`](https://github.com/1hehaq) x [`Hghost010`](https://github.com/Hghost0x00) x [`adperem`](https://github.com/adperem)!
 
 </div>
 
@@ -139,6 +139,68 @@ cd chromedriver-linux64
 ```bash
 sudo mv chromedriver /usr/bin
 ```
+
+---
+
+## Tor Installation on Kali Linux
+
+Tor is useful for anonymizing traffic during testing. Below are the steps to install and configure it on Kali Linux.
+
+### 📦 Step 1: Update the system
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+### 🔧 Step 2: Install Tor
+
+```bash
+sudo apt install tor -y
+```
+
+### 🚀 Step 3: Start and enable the Tor service
+
+```bash
+sudo systemctl start tor
+sudo systemctl enable tor
+```
+
+To check the status:
+
+```bash
+systemctl status tor
+```
+
+### 🔍 Step 4: Verify Tor is working
+
+```bash
+curl --socks5 127.0.0.1:9050 https://check.torproject.org/
+```
+
+You should see a message like:  
+**"Congratulations. This browser is configured to use Tor."**
+
+### ⚙️ Step 5: Optional Configuration
+
+Edit the config file if needed:
+
+```bash
+sudo nano /etc/tor/torrc
+```
+
+Restart Tor after any changes:
+
+```bash
+sudo systemctl restart tor
+```
+
+### 🛑 To stop Tor:
+
+```bash
+sudo systemctl stop tor
+```
+
+---
 <hr>
 
 > [!WARNING]  
