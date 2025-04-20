@@ -108,23 +108,24 @@ try:
         session.mount('https://', adapter)
         return session
 
-    def verify_tor_connection():
-        """Verifica que el tráfico se enrute a través de Tor. Termina si no es así."""
+       def verify_tor_connection():
+        """Verifies that traffic is routed through Tor. Terminates if it's not."""
         if not PROXY_CONFIG['use_proxy']:
-            print(Fore.RED + "[!] Proxy está desactivado en PROXY_CONFIG. Activando para verificar Tor...")
-            return True  # Permitir ejecución si el proxy está desactivado intencionalmente
-
-        # Prueba para requests
+            print(Fore.RED + "[!] Proxy is disabled in PROXY_CONFIG. Enabling to verify Tor...")
+            return True  # Allow execution if the proxy is intentionally disabled
+    
+        # Test for requests
         try:
             session = get_proxy_session()
             response = session.get('https://check.torproject.org', timeout=10)
             if "Congratulations. This browser is configured to use Tor." not in response.text:
-                print(Fore.RED + "[!] Error: El tráfico de requests NO se está enrutando a través de Tor.")
+                print(Fore.RED + "[!] Error: Traffic is NOT being routed through Tor.")
                 return False
-            print(Fore.GREEN + "[+] Verificado: El tráfico de requests se enruta a través de Tor.")
+            print(Fore.GREEN + "[+] Verified: Traffic is routed through Tor.")
         except requests.exceptions.RequestException as e:
-            print(Fore.RED + f"[!] Error al verificar Tor para requests: {e}")
+            print(Fore.RED + f"[!] Error verifying Tor for requests: {e}")
             return False
+
 
         # Prueba para Selenium
         chrome_options = Options()
@@ -152,15 +153,16 @@ try:
             tor_check = driver.find_element(By.TAG_NAME, 'h1').text
             driver.quit()
             if "Congratulations" not in tor_check:
-                print(Fore.RED + "[!] Error: El tráfico de Selenium NO se está enrutando a través de Tor.")
+                print(Fore.RED + "[!] Error: Selenium traffic is NOT being routed through Tor.")
                 return False
-            print(Fore.GREEN + "[+] Verificado: El tráfico de Selenium se enruta a través de Tor.")
+            print(Fore.GREEN + "[+] Verified: Selenium traffic is routed through Tor.")
             return True
         except Exception as e:
-            print(Fore.RED + f"[!] Error al verificar Tor para Selenium: {e}")
+            print(Fore.RED + f"[!] Error verifying Tor for Selenium: {e}")
             if 'driver' in locals():
                 driver.quit()
             return False
+
 
 
     USER_AGENTS = [
